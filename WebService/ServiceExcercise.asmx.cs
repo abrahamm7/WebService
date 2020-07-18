@@ -1,8 +1,13 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.ServiceModel.Web;
 using System.Web;
+using System.Web.Script.Serialization;
+using System.Web.Script.Services;
 using System.Web.Services;
+using WebService.Models;
 
 namespace WebService
 {
@@ -85,18 +90,44 @@ namespace WebService
 
         //Compras en restaurant//
         [WebMethod]
-        public List<string> Restaurant(string item1, string item2, string item3, string item4)
+        public string Restaurant(string item1, string item2, string item3, string item4)
         {
             Random random = new Random();
             var x = random.Next(500, 1500);
-            List<string> listado = new List<string>();
-            listado.Add(item1);
-            listado.Add(item2);
-            listado.Add(item3);
-            listado.Add(item4);
-            listado.Add(x.ToString());
+            List<Purchase> listado = new List<Purchase>();
+            listado.Add(new Purchase { item = item1});
+            listado.Add(new Purchase { item = item2});
+            listado.Add(new Purchase { item = item3});
+            listado.Add(new Purchase { item = item4});
+            listado.Add(new Purchase { price = x});
 
+            var text = JsonConvert.SerializeObject(listado, Newtonsoft.Json.Formatting.Indented);
+
+            return text;
+        }
+
+        //Formatos de salida//
+        [WebMethod]
+        public List<string> Formats()
+        {
+            List<string> listado = new List<string>();
+            var x = DateTime.Now;
+            var mdy = string.Format("Fecha en formato {0:MM / dd / yyyy}", x);
+            var dmy = string.Format("Fecha en formato {0:dddd, dd MMMM yyyy}", x);
+            var ymd = string.Format("Fecha en formato {0:yyyy’-‘MM’-‘dd’T’HH’:’mm’:’ss.fffffffK}", x);
+            var hm = string.Format("Fecha en formato {0:HH:mm}", x);
+            listado.Add(mdy);
+            listado.Add(dmy);
+            listado.Add(ymd);
+            listado.Add(hm);
             return listado;
+        }
+
+        //Ejercicio propuesto//
+        [WebMethod]
+        public int EjerPropuesto(int a, int b)
+        {
+            return (a + b) * (a - b);
         }
     }
 }

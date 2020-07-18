@@ -71,11 +71,23 @@ namespace WebService
 
         //Determinar el mayor de 2 numeros//
         [WebMethod]
-        public int MaxTwoNumbers(int Number, int SecondNumber)
+        public string MaxTwoNumbers(int Number, int SecondNumber)
         {
-            List<int> listado = new List<int>() { Number, SecondNumber };
-
-            return listado.Max();
+            List<MaxTwo> listado = new List<MaxTwo>();
+            if (Number > SecondNumber)
+            {
+                listado.Add(new MaxTwo { firstnumber = Number, secondnumber = SecondNumber, max = Number });
+                var text = JsonConvert.SerializeObject(listado, Newtonsoft.Json.Formatting.Indented);
+                return text;
+            }
+            else
+            {
+                listado.Add(new MaxTwo { firstnumber = Number, secondnumber = SecondNumber, max = SecondNumber });
+                var text = JsonConvert.SerializeObject(listado, Newtonsoft.Json.Formatting.Indented);
+                return text;
+            }
+            
+            
         }
 
         //Determinar el mayor de 3 numeros//
@@ -108,19 +120,16 @@ namespace WebService
 
         //Formatos de salida//
         [WebMethod]
-        public List<string> Formats()
+        public string Formats()
         {
-            List<string> listado = new List<string>();
-            var x = DateTime.Now;
-            var mdy = string.Format("Fecha en formato {0:MM / dd / yyyy}", x);
-            var dmy = string.Format("Fecha en formato {0:dddd, dd MMMM yyyy}", x);
-            var ymd = string.Format("Fecha en formato {0:yyyy’-‘MM’-‘dd’T’HH’:’mm’:’ss.fffffffK}", x);
-            var hm = string.Format("Fecha en formato {0:HH:mm}", x);
-            listado.Add(mdy);
-            listado.Add(dmy);
-            listado.Add(ymd);
-            listado.Add(hm);
-            return listado;
+            List<Formats> listado = new List<Formats>();
+            var x = DateTime.Now;           
+            listado.Add(new Formats { mdy = string.Format("Fecha en formato: {0:MM / dd / yyyy}", x),
+            dmy = string.Format("Fecha en formato: {0:dddd, dd MMMM yyyy}", x), hm = string.Format("Fecha en formato: {0:HH:mm}", x), 
+            ymd = string.Format("Fecha en formato: {0:yyyy’-‘MM’-‘dd’T’HH’:’mm’:’ss.fffffffK}", x)});
+
+            var text = JsonConvert.SerializeObject(listado, Newtonsoft.Json.Formatting.Indented);
+            return text;
         }
 
         //Ejercicio propuesto//

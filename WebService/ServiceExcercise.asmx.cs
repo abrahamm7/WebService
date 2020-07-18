@@ -21,7 +21,7 @@ namespace WebService
     // [System.Web.Script.Services.ScriptService]
     public class ServiceExcercise : System.Web.Services.WebService
     {
-        //Funcion Math//
+        //Funcion Math: Response in XML//
         [WebMethod]
         public List<double> MathOperations(double Number)
         {
@@ -38,7 +38,7 @@ namespace WebService
             return listado;
         }
 
-        //Operaciones basicas//
+        //Operaciones basicas: Response in XML//
         [WebMethod]
         public List<int> BasicOperations (int Number, int SecondNumber)
         {
@@ -55,7 +55,7 @@ namespace WebService
             return listado;           
         }
 
-        //Invertir numeros//
+        //Invertir numeros: Response in XML//
         [WebMethod]
         public string ReverseNumbers(string Number)
         {
@@ -69,7 +69,7 @@ namespace WebService
             return new string(chars);
         }
 
-        //Determinar el mayor de 2 numeros//
+        //Determinar el mayor de 2 numeros: Response in JSON//
         [WebMethod]
         public string MaxTwoNumbers(int Number, int SecondNumber)
         {
@@ -90,7 +90,7 @@ namespace WebService
             
         }
 
-        //Determinar el mayor de 3 numeros//
+        //Determinar el mayor de 3 numeros: Response in XML//
         [WebMethod]
         public int MaxThreeNumbers(int a, int b, int c)
         {          
@@ -100,7 +100,7 @@ namespace WebService
         
         }
 
-        //Compras en restaurant//
+        //Compras en restaurant: Response in JSON//
         [WebMethod]
         public string Restaurant(string item1, string item2, string item3, string item4)
         {
@@ -118,7 +118,7 @@ namespace WebService
             return text;
         }
 
-        //Formatos de salida//
+        //Formatos de salida: Response in JSON//
         [WebMethod]
         public string Formats()
         {
@@ -132,11 +132,14 @@ namespace WebService
             return text;
         }
 
-        //Ejercicio propuesto//
+        //Ejercicio propuesto: Response in JSON//
         [WebMethod]
-        public int EjerPropuesto(int a, int b)
+        public string EjercicioPropuesto(int a, int b)
         {
-            return (a + b) * (a - b);
+            List<EjerPropuesto> listado = new List<EjerPropuesto>();
+            listado.Add(new EjerPropuesto { firstnumber = a, secondnumber = b, result = (a + b) * (a - b) });
+            var text = JsonConvert.SerializeObject(listado, Newtonsoft.Json.Formatting.Indented);
+            return text ;
         }
     }
 }

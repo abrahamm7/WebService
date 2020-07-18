@@ -79,6 +79,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\EjerPropuesto.cs" />
     <Compile Include="Models\Formats.cs" />
     <Compile Include="Models\MaxTwo.cs" />
     <Compile Include="Models\Purchase.cs" />
